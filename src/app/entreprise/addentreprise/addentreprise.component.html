@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Material Dashboard Dark Edition by Creative Tim
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="addentreprise.component.css" rel="stylesheet" />
+    </head>
+    
+    <body style="background-color: #1a2035;"  class="dark-edition">
+        <div  class="wrapper ">
+            <app-nav></app-nav>
+        <div class="main-panel">
+
+          <!-- Navbar -->
+          <app-header></app-header>
+       <br>
+       <br>
+       <br>
+       <br>
+       <br>
+       <div align="center"id="alertcontrat" *ngIf="part1">
+      <div></div>
+        <div  [ngStyle]="{'position': 'absolute','z-index': 3}"[ngClass]="getAlert()">
+            <i class="material-icons" data-notify="icon">add_alert</i>
+            <button (click)=close(); class="close" data-dismiss="alert" aria-label="Close">
+              <i class="material-icons">close</i>
+            </button>
+            <span data-notify="message">{{message}}</span>
+          </div>
+        </div>
+        <div [ngStyle]="{'margin-left': '240px','margin-top':'-50px'}" class="content">
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-header card-header-primary">
+                      <h4 class="card-title">Ajouter Entreprise</h4>
+                      <p class="card-category">Entrez informations entreprise</p>
+                    </div>
+                    <div class="card-body">
+
+<form _lpchecked="1" [formGroup]="entrepriseForm"(ngSubmit)="onSubmitform()">
+            <div class="row">
+     <div class="form-group">
+        <input required class="form-control" id="nomE" [formControlName]="'nomEntreprise'" type="text" [(ngModel)]="entreprise.nomEntreprise"  name="nomE" placeholder="Nom de l'entreprise" >
+        <span 
+*ngIf="!entrepriseForm.get('nomEntreprise')?.valid && entrepriseForm.get('nomEntreprise')?.touched"
+        class="help-block"> Nom d'entreprise invalide</span>
+        </div>
+     <div class="form-group">
+        <input required class="form-control" id="locE" [formControlName]="'locEntreprise'" type="text" [(ngModel)]="entreprise.locEntreprise"  name="locE" placeholder="Localisation de l'entreprise" >
+        <span 
+        *ngIf="!entrepriseForm.get('locEntreprise')?.valid && entrepriseForm.get('locEntreprise')?.touched"
+                class="help-block">localisation invalide</span>  
+      </div>
+         <div class="form-group">
+          <input required class="form-control" id="lat" [formControlName]="'latitude'" type="text" [(ngModel)]="entreprise.latitude"  name="lot" placeholder="Latitude de l'entreprise" >
+          <span 
+          *ngIf="!entrepriseForm.get('latitude')?.valid && entrepriseForm.get('latitude')?.touched"
+                  class="help-block">latitude d'entreprise invalide</span>   
+        </div>
+           <div class="form-group">
+            <input required class="form-control" id="lon"[formControlName]="'longitude'" type="text" [(ngModel)]="entreprise.longitude"  name="lon" placeholder="Longitude l'entreprise" >
+            <span 
+            *ngIf="!entrepriseForm.get('longitude')?.valid && entrepriseForm.get('longitude')?.touched"
+                    class="help-block">longitude d'entreprise invalide</span>   
+          </div>
+         <div class="form-group">
+            <input required class="form-control" id="place" [formControlName]="'place'" type="text" [(ngModel)]="entreprise.nbPlaceRest " name="place" placeholder="Places Restantes " >
+            <span 
+            *ngIf="!entrepriseForm.get('place')?.valid && entrepriseForm.get('place')?.touched"
+                    class="help-block">Entrer un chiffre > 10</span>   
+          </div>
+     <div class="d-flex flex-row align-items-center justify-content-between">
+<div align="center">  
+   <button  class="btn btn-primary" type="submit" value="AddContrat" [disabled]="entrepriseForm.invalid" id="hy"(click)="AddEntreprise()">Créer le Contrat</button> 
+</div> </div> </div></form>
+
+            </div>
+       </div>
+    </div>
+  </div>
+
+  </div>
+  <div align="center" class="map">
+  <agm-map 
+  
+   [longitude]="lng"
+   [latitude]="lht"
+    [zoom]="zoom"
+    >
+    <agm-marker
+      [latitude]="latt"
+      [longitude]="longg"
+     [label]="{color: 'white', fontSize: '9px', text: 'Kaddem' }"
+     [iconUrl]=" {
+      url:'../assets/img/kaddemping.png'
+   
+  }"
+     ></agm-marker>
+    <agm-marker *ngFor="let entreprise of entreprises"
+     [latitude]="entreprise.latitude"
+     [longitude]="entreprise.longitude"
+    [label]="{color: 'white', fontSize: '9px', text: entreprise.nomEntreprise}"
+    [iconUrl]="
+    {
+      url: entreprise.isClicked ? '../assets/img/purplemarker.png' : '../assets/img/purplemarker.png'
+   
+  }">
+    <agm-info-window>
+      <strong>Distance: {{entreprise.distance}} Km</strong><br/>
+    
+    </agm-info-window>
+  
+  
+  </agm-marker>
+</agm-map></div>
+<app-footer></app-footer>
+  <script>
+    setTimeout(() => {
+  const box = document.getElementById('alertcontrat');
+
+  // 👇️ hides element (still takes up space on page)
+  box.style.visibility = 'hidden';
+}, 10);
+  </script>

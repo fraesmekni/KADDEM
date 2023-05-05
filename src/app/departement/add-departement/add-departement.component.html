@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Material Dashboard Dark Edition by Creative Tim
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <!-- <link href="adduser.component.css" rel="stylesheet" /> -->
+</head>
+
+<body class="dark-edition">
+  <div class="wrapper ">
+   <app-nav></app-nav> 
+    <div class="main-panel">
+      <!-- Navbar -->
+         <app-header></app-header> 
+        <!-- End Navbar -->
+      <!-- End Navbar -->
+          <div class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-header card-header-primary">
+                      <h4 class="card-title">Add Departement</h4>
+                      <p class="card-category">Departement</p>
+                    </div>
+                    <div class="card-body">
+                      <div class="card-body">
+                        <form _lpchecked="1" #f="ngForm" (ngSubmit)="AdddeparteA()">
+                          <div  class="form-group" >
+                          
+                           <div class="row" >
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <div *ngIf="nomDepart.invalid && nomDepart.touched" 
+                                                  class="alert alert-danger" role="alert"  >
+                                  <div *ngIf="nomDepart.errors?.['required']" style="color: red;">required</div>
+                                  <div *ngIf="nomDepart.errors?.['pattern']"> chaine de caracteres  </div>
+                                  <div *ngIf="nomDepart.errors?.['minlength']"> more than 3  </div> 
+                            <div *ngIf="nomDepart.errors?.['maxlength']"> less than 10  </div> 
+                                </div>
+                                <label class="bmd-label-floating">Nom Departement</label>
+                                <input type="text" class="form-control" [(ngModel)]="departemen.nomDepart"
+                                 required minlength="3" maxlength="18" pattern="[^\s][A-z0-9À-ž\s]+"  #nomDepart="ngModel"
+                                  name="nomDepart"  id="nomDepart" placeholder="nom de departement">
+                              </div>
+                            </div>
+                          
+                            
+                          </div>
+                          <!-- attribut nb etage-->
+
+                          <div class="row" >
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <div *ngIf="nbEtage.invalid && nbEtage.touched" 
+                                                  class="alert alert-danger" role="alert"  >
+                                  <div *ngIf="nbEtage.errors?.['required']" style="color: red;">required</div>
+                                  <div *ngIf="nbEtage.errors?.['pattern']"> inf à 10 </div>
+                                </div>
+                                <label class="bmd-label-floating">Nombre des Etages</label>
+                                <input type="text" class="form-control" [(ngModel)]="departemen.nbEtage"
+                                 required  pattern="[0-9]{1}"  #nbEtage="ngModel"
+                                  name="nbEtage"  id="nbEtage" placeholder="etages">
+                                  <div class="alert alert-danger" role="alert" *ngIf="f.value.nbEtage>5"> 
+                                    maximum 5
+                                        </div>
+                              </div>
+                            </div>
+                          
+                            
+                          </div>
+
+                          <button type="submit" class="btn btn-primary pull-right" [disabled]="f.invalid" (click)=" AdddeparteA()" >AJOUTER </button>
+                          <div class="clearfix"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary pull-right" (click)=" backToTheList()" >Retour</button>
+      
+                     
+                        </form>
+                      </div>
+                      
+         <!-- <form _lpchecked="1" #f="ngForm">
+            <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating ">Nom Departement</label>
+                                   <input required type="text" [(ngModel)]="departemen.nomDepart" class="form-control" name="nomDepart" #nomDepart="ngModel" id="nomDepart" placeholder="nom de Departement">
+          </div>
+         </div> 
+                              <div class="alert alert-danger" role="alert" *ngIf="f.value.nomDepart "> La date du debut du contrat doit etre inferieure à la date de la fin</div>
+ -->
+                            
+                <!--   <div class="form-group">
+                    <input required class="form-control"  type="text"[(ngModel)]="contrat.specialite" list=specialite  name="specialite" placeholder="Specialité Demandée" #specialite="ngModel">
+                    <div class="alert alert-danger" role="alert" *ngIf="f.value.specialite == 1"> Please don't enter this</div>
+                    <datalist id=specialite >
+                      <option value="SECURITE"> SECURITE 
+                      <option value="CLOUD"> CLOUD
+                        <option value="RESEAUX"> RESEAUX
+                            <option value="IA"> IA
+                    </datalist> </div>
+                <div class="form-group">
+                    <input required class="form-control"  type="text" [(ngModel)]="contrat.archive "list=archive placeholder="Contrat Archivé?" name="archive" >
+                    <datalist id=archive >
+                      <option value="true"> Archive
+                            <option value="false"> Pas d'Archive
+                    </datalist> </div>
+                    <div class="form-group">
+                    <input required class="form-control"  type="text" [(ngModel)]="contrat.descriptionContrat " placeholder="Description du Contrat" name="description" >
+                        </div>
+                        <div class="form-group">
+                          <input required class="form-control"  type="text" [(ngModel)]="etudiant.nomE" placeholder="Nom de l'étudiant associé " name="etudiantC" >
+                              </div>
+                              <div class="form-group">
+                                <input required class="form-control"  type="text" [(ngModel)]="etudiant.prenomE" placeholder="Prenom de l'étudiant associé" name="etudiantC" >
+                                    </div>  -->
+    <!--  <div class="d-flex flex-row align-items-center justify-content-between">
+<div align="center">  
+   <button class="btn btn-primary" type="submit" value="Add Departement"(click)="AdddeparteA()" [disabled]="!f.valid">Créer le departement</button> 
+</div>  
+            </div>
+            </div>
+         </form> -->
+   
+        </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  <app-footer></app-footer> 
+  <script>
+    setTimeout(() => {
+  const box = document.getElementById('alertcontrat');
+
+  // 👇️ hides element (still takes up space on page)
+  box.style.visibility = 'hidden';
+}, 10);
+  </script>
